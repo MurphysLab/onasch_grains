@@ -28,7 +28,7 @@ The method used by this algorithm determines the points at which two ellipses in
     1. Record distances.
     1. Draw the lines
 
-In step 2.ii, checking for intersections, a sped-up trick is performed utilizing the nature of ellipses by checking whether the distance between two ellipse centres is greater than the sum of the [semi-major axes](https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes) of the ellipses. 
+In step 2.2, checking for intersections, check is performed, utilizing the nature of ellipses, to determine whether the distance between two ellipse centres is greater than the sum of the [semi-major axes](https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes) of the ellipses. This provides time-savings relative to the process to determine where and if two polygons intersect for all pairs of polygons.
 
 
 ## Input Data 
