@@ -15,9 +15,9 @@ The method used by this algorithm determines the points at which two ellipses in
 The algorithm: 
 
 1. For all ellipses:
-  1. Make ellipse ROI
-  1. Rotate, translate, and make the intervals regular
-  1. add to ROI manager.
+    1. Make ellipse ROI
+    1. Rotate, translate, and make the intervals regular
+    1. add to ROI manager.
 2. Loop through, comparing all pairs of ellipses
   1. Get the ROIs
   1. Check for intersections
