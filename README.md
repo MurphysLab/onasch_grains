@@ -8,9 +8,12 @@ This is an ImageJ macro for determining features of grain boundary interfaces, w
 The purpose is described in Onasch (1993); Pierson (2014) is an open-access thesis with a description of the method. 
 
 
+
+
+
 ## Method
 
-The method used by this algorithm determines the points at which two ellipses intersect using the polygonal approximation of the ROI in ImageJ. Typically the makeEllipse function produces 72-sided polygons when rendered as regions of interest (ROIs). In practice, this means that the method is an approximation compared to analytic calculations of ellipse intersections. However this is sufficinetly accurate for the intended purpose and has the added benefit that it can be extended to any other pair of [convex polygons](https://en.wikipedia.org/wiki/Convex_polygon). 
+The method used by this algorithm determines the points at which two ellipses intersect using the polygonal approximation of the ROI in ImageJ. Typically ImageJ's **makeEllipse** function produces 72-sided polygons when rendered as regions of interest (ROIs). In practice, this means that the method is an approximation compared to analytic calculations of ellipse intersections. However this is sufficinetly accurate for the intended purpose and has the added benefit that it can be extended to any other pair of [convex polygons](https://en.wikipedia.org/wiki/Convex_polygon). 
 
 ### The algorithm: 
 
@@ -51,8 +54,13 @@ The image input is typically a TIF of a thin section of geological material unde
 
 Two sample data files have been provided by _____. 
 
+## Output Data
+
+![Numbered ellipses on a blank canvas using input data.](/ellipse_input_blank.png)
+![Numbered ellipses on a blank canvas with compromise boundaries and compression axes drawn.](/results_blank.png)
 
 
+results_blank.png
 
 ## References:
 
