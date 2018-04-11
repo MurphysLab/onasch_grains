@@ -12,23 +12,23 @@ The purpose is described in Onasch (1993); Pierson (2014) is an open-access thes
 
 The method used by this algorithm determines the points at which two ellipses intersect using the polygonal approximation of the ROI in ImageJ. Typically the makeEllipse function produces 72-sided polygons when rendered as regions of interest (ROIs). In practice, this means that the method is an approximation compared to analytic calculations of ellipse intersections. However this is sufficinetly accurate for the intended purpose and has the added benefit that it can be extended to any other pair of [convex polygons](https://en.wikipedia.org/wiki/Convex_polygon). 
 
-The algorithm: 
+### The algorithm: 
 
 1. For all ellipses:
     1. Make ellipse ROI
     1. Rotate, translate, and make the intervals regular
     1. add to ROI manager.
 2. Loop through, comparing all pairs of ellipses
-  1. Get the ROIs
-  1. Check for intersections
-  1. If they intersect, determine the line between the intersection points
-  1. Find midpoint; calculate line perpendicular (L).
-  1. Find points where L intersects the two ellipses.
-  1. Calculate the min and max distances from those intersections
-  1. Record distances.
-  1. Draw the lines
+    1. Get the ROIs
+    1. Check for intersections
+    1. If they intersect, determine the line between the intersection points
+    1. Find midpoint; calculate line perpendicular (L).
+    1. Find points where L intersects the two ellipses.
+    1. Calculate the min and max distances from those intersections
+    1. Record distances.
+    1. Draw the lines
 
-In step 2.1, checking for intersections, a sped-up trick is performed utilizing the nature of ellipses by checking whether the distance between two ellipse centres is greater than the sum of the [semi-major axes](https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes) of the ellipses. 
+In step 2.ii, checking for intersections, a sped-up trick is performed utilizing the nature of ellipses by checking whether the distance between two ellipse centres is greater than the sum of the [semi-major axes](https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes) of the ellipses. 
 
 
 ## Input Data 
