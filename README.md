@@ -8,7 +8,7 @@ This is an ImageJ macro for determining features of grain boundary interfaces, w
 The purpose is described in Onasch (1993); Pierson (2014) is an open-access thesis with a description of the method. 
 
 
-
+![Original figure from Onasch (1993)](/img/onasch_original.png)
 
 
 ## Method
@@ -59,8 +59,6 @@ Two sample data files have been provided by _____.
 ![Numbered ellipses on a blank canvas using input data.](/img/ellipse_input_blank_sm.png)
 ![Numbered ellipses on a blank canvas with compromise boundaries and compression axes drawn.](/img/results_blank_sm.png)
 
-
-results_blank.png
 
 ## References:
 
