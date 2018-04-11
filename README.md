@@ -56,8 +56,8 @@ Two sample data files have been provided by _____.
 
 ## Output Data
 
-![Numbered ellipses on a blank canvas using input data.](/ellipse_input_blank.png?v=4&s=200)
-![Numbered ellipses on a blank canvas with compromise boundaries and compression axes drawn.](/results_blank.png)
+![Numbered ellipses on a blank canvas using input data.](/img/ellipse_input_blank_sm.png)
+![Numbered ellipses on a blank canvas with compromise boundaries and compression axes drawn.](/img/results_blank_sm.png)
 
 
 results_blank.png
