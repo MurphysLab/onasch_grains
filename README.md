@@ -11,9 +11,14 @@ The purpose is described in Onasch (1993); Pierson (2014) is an open-access thes
 
 
 
-Two sample data files have been provided by _____. The TIF is an image of a thin section of material under a microscope with the desired ellipses drawn on it. The image file is unnecessary, however it provides a check for the data. The CSV is a data file containing coordinates for the ellipses drawn using EllipseFit. 
 
-Data in CSV file: *ID,X,Y,Max,Min,Area,R,Phi*
+### Input Data 
+
+The CSV is a data file containing coordinates for the ellipses drawn using EllipseFit. The output file may require editing to remove prefatory lines in order for ImageJ to recognize it (*i.e.* There should be no lines preceeding the column labels.)
+
+The CSV file is expected to be organized with the following columns:
+
+*ID,X,Y,Max,Min,Area,R,Phi*
 
 * ID  :  id number for each ellipse
 * x   :  x coordinate (px)
@@ -23,6 +28,9 @@ Data in CSV file: *ID,X,Y,Max,Min,Area,R,Phi*
 * R   :  ellipse ratio ( max / min)
 * Phi :  orientation of the long axis of ellipse
 
+The image input is typically a TIF of a thin section of geological material under a petrographic microscope. The desired ellipses may already be drawn on it, however this is not a data input. The image file is unnecessary, however it provides a check for the data. 
+
+Two sample data files have been provided by _____. 
 
 
 
