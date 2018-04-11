@@ -8,11 +8,12 @@ This is an ImageJ macro for determining features of grain boundary interfaces, w
 The purpose is described in Onasch (1993); Pierson (2014) is an open-access thesis with a description of the method. 
 
 
+## Method
 
 
 
 
-### Input Data 
+## Input Data 
 
 The CSV is a data file containing coordinates for the ellipses drawn using EllipseFit. The output file may require editing to remove prefatory lines in order for ImageJ to recognize it (*i.e.* There should be no lines preceeding the column labels.)
 
@@ -32,7 +33,7 @@ The image input is typically a TIF of a thin section of geological material unde
 
 Two sample data files have been provided by _____. 
 
-
+### does this show up?
 
 
 ## References:
