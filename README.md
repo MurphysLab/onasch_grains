@@ -1,4 +1,4 @@
-README.md
+# Onasch Grains
 
 This is an ImageJ macro for determining features of grain boundary interfaces, wherein the grains are modelled by ellipses which represent a reconstruction of the original grain boundaries. 
 
