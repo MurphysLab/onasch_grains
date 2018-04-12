@@ -19,7 +19,10 @@ This process has been adapted using ImageJ to solve the analysis of overlapping 
 
 The method used by this algorithm determines the points at which two ellipses intersect using the polygonal approximation of the ROI in ImageJ. Typically ImageJ's **makeEllipse** function produces 72-sided polygons when rendered as regions of interest (ROIs). In practice, this means that the method is an approximation compared to analytic calculations of ellipse intersections. However this is sufficinetly accurate for the intended purpose and has the added benefit that it can be extended to any other pair of [convex polygons](https://en.wikipedia.org/wiki/Convex_polygon). 
 
+### Files
+
 * **ellipse_intersections.ijm** : The "Ellipse Intersections" macro provides a simple demonstration of the method which requires no additional data input. Simply open with ImageJ (or [FIJI](http://fiji.sc/Fiji)) and click ***Run*** to execute and see the results.
+* **onasch_grains.ijm** : The "Onasch Grain Overlaps" macro is designed for processing multiple ellipses for a given image, with the ellipse data loaded as a CSV file into ImageJ's ***Results Table***. The output results will be recorded in a new table. 
 
 ### The algorithm: 
 
