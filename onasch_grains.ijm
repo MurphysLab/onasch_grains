@@ -342,3 +342,4 @@ function perpNormMidPtVectorCW(xA,yA,multiply){
 	makeSelection("line",xv,yv);
 }
 
+
