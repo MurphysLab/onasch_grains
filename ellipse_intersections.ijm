@@ -115,7 +115,10 @@ Overlay.addSelection(strokeColor, strokeWidth);
 Overlay.show;
 
 fullLoopCoords();
-getSelectionCoordinates(xpts1,ypts1);
+getSelectionCoordinates(xptsA,yptsA);
+
+
+
 
 aspectRatio2 = 0.75;
 angle_deg2 = -20; 
@@ -131,17 +134,23 @@ Overlay.addSelection(strokeColor, strokeWidth);
 Overlay.show;
 
 fullLoopCoords();
-getSelectionCoordinates(xpts2,ypts2);
-//makeSelection("polyline",xpts2,ypts2);
+getSelectionCoordinates(xptsB,yptsB);
+//
 
-print(xpts2[0])
-print(xpts2[xpts2.length-1]);
+// Check to see that "fullLoopCoords" worked.
+if( (xptsB[0]==xptsB[xptsB.length-1]) && (yptsB[0]==yptsB[yptsB.length-1]) ){
+	print("fullLoopCoords worked");
+}
+else{
+	print("fullLoopCoords failed");
+}
 
-print(ypts2[0])
-print(ypts2[ypts2.length-1]);
+makeSelection("polyline",xptsA,yptsA);
+wait(1000);
+makeSelection("polyline",xptsB,yptsB);
+wait(1000);
 
-
-n_int = countIntersectionsBrute(xpts1,ypts1,xpts2,ypts2);
+n_int = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
 print("Intersections: " + n_int);
 
 
