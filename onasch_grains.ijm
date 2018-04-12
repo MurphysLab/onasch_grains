@@ -38,8 +38,22 @@
 
 scale_factor = 1;//76/100; // px / um
 
+// Overlay Colours
+c_ellipse = "DD0066ff"; // alpha = 0.8; sky blue
+c_interface = "4400DDFF";
+c_vector = "00FFFFFF"; // alpha = 0.00; white (don't draw)
+c_inner = "CCFF2200"; // alpha = 0.75; red
+c_outer = "88FF5700"; // alpha = 0.50; orangered
 
+// Overlay line widths
+w_ellipse = 4;
+w_interface = 3;
+w_vector = 0;
+w_inner = 3;
+w_outer = 2;
 
+	strokeColor =  c_ellipse;
+	strokeWidth = 5;
 
 // Macro
  
@@ -68,9 +82,7 @@ for(n=0; n<nResults; n++){
 	aspectRatio = 1/ratio; // inverse
 	a = rotateLine(x,y,d_max,phi);
 	makeEllipse( a[0],a[1],a[2],a[3], aspectRatio);
-	strokeColor =  "0066ff";
-	strokeWidth = 5;
-	Overlay.addSelection(strokeColor, strokeWidth);
+	Overlay.addSelection(c_ellipse, w_ellipse);
 	Overlay.show;
 	ID_tab[n] = getResult("ID",n);
 	x_tab[n] = scale_factor*getResult("X",n);
@@ -86,39 +98,52 @@ if(isOpen("Results")){
 } 
 
 row = 0;
+// Ellipse A
 for(n=0; n<ID_tab.length-1; n++){
-	// First Ellipse (A)
+	// Draw First Ellipse (A)
 	aspectRatioA = 1/ratio_tab[n]; // inverse
 	a = rotateLine(x_tab[n],y_tab[n],d_tab[n],phi_tab[n]);
 	makeEllipse( a[0],a[1],a[2],a[3], aspectRatioA);
 	fullLoopCoords();
 	getSelectionCoordinates(xA,yA);
-	for(m=1; m<ID_tab.length; m++){
-		// Second Ellipse (B)
-		aspectRatioB = 1/ratio_tab[m]; // inverse
-		b = rotateLine(x_tab[m],y_tab[m],d_tab[m],phi_tab[m]);
-		makeEllipse( b[0],b[1],b[2],b[3], aspectRatioB);
-		fullLoopCoords();
-		getSelectionCoordinates(xB,yB);
 
-		// Find Intersections Between Ellipses A & B
+	// Ellipse B
+	for(m=n+1; m<ID_tab.length; m++){
 
-		n_int_EE = countIntersectionsBrute(xA,yA,xB,yB);
+		// Shortcut: Check distance between A & B first!
+		// Speeds up the process!
+		dist_AB = sqrt( pow(x_tab[n]-x_tab[m],2) + pow(y_tab[n]-y_tab[m],2) );
+		radii_combo_AB = (d_tab[n] + d_tab[m])/2;
+		if(dist_AB < radii_combo_AB){
+			// Draw Second Ellipse (B)
+			aspectRatioB = 1/ratio_tab[m]; // inverse
+			b = rotateLine(x_tab[m],y_tab[m],d_tab[m],phi_tab[m]);
+			makeEllipse( b[0],b[1],b[2],b[3], aspectRatioB);
+			fullLoopCoords();
+			getSelectionCoordinates(xB,yB);
+	
+			// Find Intersections Between Ellipses A & B
+	
+			n_int_EE = countIntersectionsBrute(xA,yA,xB,yB);
+		}
+		else{
+			n_int_EE = 0; // zero intersections between ellipses A & B
+		}
 		if(n_int_EE == 2){
 
 			// Line of the intersection or interface (xI & yI = inersection line)
 			getSelectionCoordinates(xI,yI);
-			Overlay.addSelection("880099FF", strokeWidth);
+			Overlay.addSelection(c_interface, w_interface);
 			Overlay.show;
 			
 			// find normal (xV & yV = normal Vector)
-			extend = 100;
+			extend = 1;
 			perpNormMidPtVectorCW(xI,yI,extend);
 			getSelectionCoordinates(xV,yV);
-			Overlay.addSelection("88AA00AA", strokeWidth);
+			Overlay.addSelection(c_vector, w_vector);
 			Overlay.show;
 
-			// find intersections of the normal L with ellipses A & B (IO = innner & outer)
+			// find intersections of the normal L with ellipses A & B (IO = inner & outer)
 			n_int_LE = ellipseLineIntersections(xV,yV,xA,yA,xB,yB);
 			getSelectionCoordinates(xIO,yIO);
 			//Overlay.addSelection("88DD2200", 1);
@@ -131,17 +156,23 @@ for(n=0; n<ID_tab.length-1; n++){
 				L_outer = sqrt( pow( xIO[0] - xIO[3], 2) + pow( yIO[0] - yIO[3], 2) );
 				L_inner = sqrt( pow( xIO[1] - xIO[2], 2) + pow( yIO[1] - yIO[2], 2) );
 
+				// Outer Overlay
 				makeSelection("line",x_outer,y_outer);
-				Overlay.addSelection("88AA00AA", strokeWidth);
+				Overlay.addSelection(c_outer, w_outer);
 				Overlay.show;
+
+				// Inner Overlay
 				makeSelection("line",x_inner,y_inner);
-				Overlay.addSelection("CC0066AA", strokeWidth);
+				Overlay.addSelection(c_inner, w_inner);
 				Overlay.show;
 
 				setResult("ID1",row,ID_tab[n]);
 				setResult("ID2",row,ID_tab[m]);
 				setResult("Inner",row,L_inner);
 				setResult("Outer",row,L_outer);
+
+				vector_angle = 180/PI*atan2(yV[1]-yV[0],xV[1]-xV[0]);
+				setResult("Angle",row,vector_angle);
 				row++;
 			}
 		}
@@ -149,6 +180,10 @@ for(n=0; n<ID_tab.length-1; n++){
 		
 	}
 }
+run("Select None");
+
+
+
 
 
 // FUNCTIONS
