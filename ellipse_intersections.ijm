@@ -2,7 +2,7 @@
 // Jeffrey N. Murphy, 2018
 
 
-function segmentIntersection(xa1,ya1,xa2,ya2,xb1,yb1,xb2,yb2){
+function segmentIntersectionX(xa1,ya1,xa2,ya2,xb1,yb1,xb2,yb2){
 	// Note that "B" vector is the 
 	// p(t) = u0 + a * v0			// "A"" vector
 	// p(s) = u1 + b * v1			// "B" vector
@@ -17,7 +17,7 @@ function segmentIntersection(xa1,ya1,xa2,ya2,xb1,yb1,xb2,yb2){
 		b = (1/d) * ( (x00 - x10)*y01 - (y00 - y10)*x01 ); 	// indicates position on the "B" vector
 		a = (1/d) * ( (x00 - x10)*y11 - (y00 - y10)*x11 ); 	// indicates position on the "A" vector
 		xint = x00 + a*x01; yint = y00 + a*y01;			// the (xint,yint) where the lines intersect
-		if(a>=1 && b<=1 && b>=0){correct = 1;}else{correct = 0;}// this should preclude all values except the desired intersection
+		if(a>=0 && a<=1 && b<=1 && b>=0){correct = 1;}else{correct = 0;}// this should preclude all values except the desired intersection
 		//if(correct){
 		//print("correct: " + correct + " & CP: " + crossproduct2D + " & a: " + a + " & b: " + b + " & xint: " + xint + " & yint: " + yint);
 		//}
@@ -60,9 +60,10 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 	y_int = newArray(0);
 	for(i=1; i<xA.length; i++){
 		for(j=1; j<xB.length; j++){
-			a = segmentIntersection(xA[i-1],yA[i-1],xA[i],yA[i],xB[j-1],yB[j-1],xB[j],yB[j]);
+			a = segmentIntersectionX(xA[i-1],yA[i-1],xA[i],yA[i],xB[j-1],yB[j-1],xB[j],yB[j]);
 			if(a[0]){
 				// draw intersection
+				
 				xB_int = a[3]*(xB[j]-xB[j-1])+xB[j];
 				xA_int = a[2]*(xA[i]-xA[i-1])+xA[i];
 				yB_int = a[3]*(yB[j]-yB[j-1])+yB[j];
@@ -70,8 +71,10 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 				makeLine(xA_int,yA_int,xB_int,yB_int);
 				Overlay.addSelection("ff0000",2);
 				Overlay.show;
+				wait(300);
 				makeOval(xA_int-1,yA_int-1,2,2);
 				Overlay.addSelection("",0,"CCFFFF00");
+				wait(300);
 				
 				print(""+i+", " + j);
 				Array.print(a);
@@ -83,6 +86,7 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 				Overlay.show;
 				x_int = Array.concat(x_int,a[4]);
 				y_int = Array.concat(y_int,a[5]);
+				wait(200);
 			}
 		}
 	}
