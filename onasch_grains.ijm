@@ -45,6 +45,11 @@ c_vector = "00FFFFFF"; // alpha = 0.00; white (don't draw)
 c_inner = "CCFF2200"; // alpha = 0.75; red
 c_outer = "88FF5700"; // alpha = 0.50; orangered
 
+// Text Options
+c_text = "DD228B22"; // colour for text
+font_name = "SansSerif"; //  "SansSerif", "Serif" or "Monospaced"
+font_style = "antiliased" ; // "antiliased", "bold", "italic"
+
 // Overlay line widths
 w_ellipse = 4;
 w_interface = 4;
@@ -98,6 +103,9 @@ d_tab = newArray(nResults);
 phi_tab = newArray(nResults);
 ratio_tab = newArray(nResults);
 
+setColor(c_text);
+setFont(font_name, font_size, font_style);
+setJustification("center");
 for(n=0; n<nResults; n++){
 	x = scale_factor*getResult("X",n);
 	y = scale_factor*getResult("Y",n);
@@ -110,6 +118,7 @@ for(n=0; n<nResults; n++){
 	a = rotateLine(x,y,d_max,phi);
 	makeEllipse( a[0],a[1],a[2],a[3], aspectRatio);
 	Overlay.addSelection(c_ellipse, w_ellipse);
+	Overlay.drawString("text", x, y, 0);
 	Overlay.show;
 	ID_tab[n] = getResult("ID",n);
 	x_tab[n] = scale_factor*getResult("X",n);
