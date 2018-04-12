@@ -36,7 +36,7 @@
 
 // User Inputs:
 
-scale_factor = 1;//76/100; // px / um
+scale_factor = 1; // px / um
 
 // Overlay Colours
 c_ellipse = "DD0066ff"; // alpha = 0.8; sky blue
@@ -56,8 +56,9 @@ w_outer = 2;
 	strokeWidth = 5;
 
 // Macro
- 
 
+if(nImages==0){
+Dialog.create("Title")
 
 
 Overlay.clear;
