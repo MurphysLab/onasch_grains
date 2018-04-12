@@ -70,6 +70,8 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 				makeLine(xA_int,yA_int,xB_int,yB_int);
 				Overlay.addSelection("ff0000",2);
 				Overlay.show;
+				makeOval(xA_int-1,yA_int-1,2,2);
+				Overlay.addSelection("",0,"CCFFFF00");
 				
 				print(""+i+", " + j);
 				Array.print(a);
@@ -130,7 +132,7 @@ Overlay.show;
 
 fullLoopCoords();
 getSelectionCoordinates(xpts2,ypts2);
-makeSelection("polyline",xpts2,ypts2);
+//makeSelection("polyline",xpts2,ypts2);
 
 print(xpts2[0])
 print(xpts2[xpts2.length-1]);
