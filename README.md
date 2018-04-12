@@ -2,10 +2,11 @@
 
 This is an ImageJ macro for determining features of grain boundary interfaces, wherein the grains are modelled by ellipses which represent a reconstruction of the original grain boundaries. 
 
+Using the intersections of these reconstructed grain boundaries, *i.e.* the grain-fitting ellipses, a straight-line compromise boundary is determined. From this, the width of the compressed region as well as the total width are determined along the line perpendicular to the midpoint of the compromise boundary. 
 
-1. The straight-line compromise boundary
+![Figure outlining process, adapted from Onasch (1993)](/img/onasch_original.png)
 
-The purpose is described in Onasch (1993); Pierson (2014) is an open-access thesis with a description of the method. 
+The process, including its purpose and technical significance, is described in Onasch (1993); Pierson (2014) is an open-access thesis with a description of the method. 
 
 
 ![Original figure from Onasch (1993)](/img/onasch_original.png)
