@@ -2,6 +2,96 @@
 // Jeffrey N. Murphy, 2018
 
 
+newImage("New Image", "8-bit white", 1024, 1024, 1);
+
+// hypothetical ellipses
+
+Overlay.clear;
+
+
+aspectRatio1 = 0.4;
+angle_deg1 = 60; 
+x_centre = getWidth/2+130;
+y_centre = getWidth/2+70;
+L1 = 580;
+a = rotateLine(x_centre,y_centre,L1,angle_deg1);
+makeEllipse(a[0],a[1],a[2],a[3], aspectRatio1);
+
+strokeColor =  "ffbb00";
+strokeWidth = 3;
+Overlay.addSelection(strokeColor, strokeWidth);
+Overlay.show;
+
+fullLoopCoords();
+getSelectionCoordinates(xptsA,yptsA);
+
+
+
+
+aspectRatio2 = 0.75;
+angle_deg2 = -20; 
+x_centre = getWidth/2-65;
+y_centre = getWidth/2-20;
+L2 = 320;
+a = rotateLine(x_centre,y_centre,L2,angle_deg2);
+makeEllipse(a[0],a[1],a[2],a[3], aspectRatio2);
+
+strokeColor =  "88ff00";
+strokeWidth = 3;
+Overlay.addSelection(strokeColor, strokeWidth);
+Overlay.show;
+
+fullLoopCoords();
+getSelectionCoordinates(xptsB,yptsB);
+//
+
+// Check to see that "fullLoopCoords" worked.
+if( (xptsB[0]==xptsB[xptsB.length-1]) && (yptsB[0]==yptsB[yptsB.length-1]) ){
+	print("fullLoopCoords worked");
+}
+else{
+	print("fullLoopCoords failed");
+}
+
+print("Ellipse A edges: " + (xptsA.length-1));
+print("Ellipse B edges: " + (xptsA.length-1));
+
+
+makeSelection("polyline",xptsA,yptsA);
+wait(300);
+makeSelection("polyline",xptsB,yptsB);
+wait(300);
+
+n_int_EE = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
+print("EE Intersections: " + n_int_EE);
+getSelectionCoordinates(xI,yI);
+Overlay.addSelection("880099FF", strokeWidth);
+Overlay.show;
+
+extend = 1;
+perpNormMidPtVectorCW(xI,yI,extend);
+getSelectionCoordinates(xV,yV);
+Overlay.addSelection("88FF2200", strokeWidth);
+Overlay.show;
+
+n_int_LE = ellipseLineIntersections(xV,yV,xptsA,yptsA,xptsB,yptsB);
+print("LE Intersections: " + n_int_LE);
+Overlay.addSelection("88FF2200", 1);
+Overlay.show;
+
+
+
+
+
+
+
+
+
+
+
+// Functions
+
+
 function segmentIntersectionX(xa1,ya1,xa2,ya2,xb1,yb1,xb2,yb2){
 	// Note that "B" vector is the 
 	// p(t) = u0 + a * v0			// "A"" vector
@@ -191,77 +281,3 @@ function perpNormMidPtVectorCW(xA,yA,multiply){
 	yv = newArray(y_centre,y_centre+y_cw*multiply);
 	makeSelection("line",xv,yv);
 }
-
-
-
-
-// hypothetical ellipses
-
-Overlay.clear;
-
-
-aspectRatio1 = 0.4;
-angle_deg1 = 60; 
-x_centre = getWidth/2+130;
-y_centre = getWidth/2+70;
-L1 = 580;
-a = rotateLine(x_centre,y_centre,L1,angle_deg1);
-makeEllipse(a[0],a[1],a[2],a[3], aspectRatio1);
-
-strokeColor =  "ffbb00";
-strokeWidth = 3;
-Overlay.addSelection(strokeColor, strokeWidth);
-Overlay.show;
-
-fullLoopCoords();
-getSelectionCoordinates(xptsA,yptsA);
-
-
-
-
-aspectRatio2 = 0.75;
-angle_deg2 = -20; 
-x_centre = getWidth/2-65;
-y_centre = getWidth/2-20;
-L2 = 320;
-a = rotateLine(x_centre,y_centre,L2,angle_deg2);
-makeEllipse(a[0],a[1],a[2],a[3], aspectRatio2);
-
-strokeColor =  "88ff00";
-strokeWidth = 3;
-Overlay.addSelection(strokeColor, strokeWidth);
-Overlay.show;
-
-fullLoopCoords();
-getSelectionCoordinates(xptsB,yptsB);
-//
-
-// Check to see that "fullLoopCoords" worked.
-if( (xptsB[0]==xptsB[xptsB.length-1]) && (yptsB[0]==yptsB[yptsB.length-1]) ){
-	print("fullLoopCoords worked");
-}
-else{
-	print("fullLoopCoords failed");
-}
-
-makeSelection("polyline",xptsA,yptsA);
-wait(300);
-makeSelection("polyline",xptsB,yptsB);
-wait(300);
-
-n_int_EE = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
-print("EE Intersections: " + n_int_EE);
-getSelectionCoordinates(xI,yI);
-Overlay.addSelection("880099FF", strokeWidth);
-Overlay.show;
-
-extend = 100;
-perpNormMidPtVectorCW(xI,yI,extend);
-getSelectionCoordinates(xV,yV);
-Overlay.addSelection("88FF2200", strokeWidth);
-Overlay.show;
-
-n_int_LE = ellipseLineIntersections(xV,yV,xptsA,yptsA,xptsB,yptsB);
-print("LE Intersections: " + n_int_LE);
-Overlay.addSelection("88FF2200", 1);
-Overlay.show;
