@@ -76,5 +76,5 @@ Two sample data files have been provided by _____.
 
 ## References:
 
-1. Charles M. Onasch, "Determination of pressure solution shortening in sandstones", *Tectonophysics*, **1993**, 227, pp. 145-159. DOI: [](https://doi.org/10.1016/0040-1951(93)90092-X)
+1. Charles M. Onasch, "Determination of pressure solution shortening in sandstones", *Tectonophysics*, **1993**, 227, pp. 145-159. DOI: [10.1016/0040-1951(93)90092-X](https://doi.org/10.1016/0040-1951(93)90092-X)
 2. Nichole Pierson, "Assessing Layer Parallel Shortening in the Easter Colorado Front Range Using Tin Section Analysis and Analog Sandbox Models". MSc Thesis, University of Nebraska - Lincoln, Department of Earth and Atmospheric Sciences, 2014. URL: [http://digitalcommons.unl.edu/geoscidiss/51](htp://digitalcommons.unl.edu/geoscidiss/51)
