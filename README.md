@@ -66,12 +66,25 @@ Two sample data files have been provided by _____.
 
 ## User Inputs
 
+Colours and line widths of the overlays plotted with the *Onasch_Grains* tool can be modified by changing the input values at the top of the macro file. [Hex codes](https://www.w3schools.com/colors/colors_picker.asp) are used for colour. 
+
+It is important to note that the ellipse measurements (coordinates and axes) are given in pixel units. 
 
 
 ## Output Data
 
+Ellipses drawn with and without lines drawn to measure shortening perpendicular to the compromise boundary:
+
 ![Numbered ellipses on a blank canvas using input data.](/img/ellipse_input_blank_sm.png)
 ![Numbered ellipses on a blank canvas with compromise boundaries and compression axes drawn.](/img/results_blank_sm.png)
+
+To quickly visualize the results from this, the data points can be plotted on circle relative to angle and percent shortening. 
+
+* **quick_orientation_plot.ijm** : The macro offers two methods to choose from. (A) Points are plotted with (100-percent_shortening)/100 × plot_radius. (B) Points are plotted with (percent_shorting / max_percent_shortening) × plot_radius. 
+
+| A                            | B                            | 
+| :--------------------------: |:----------------------------:| 
+| ![](/img/results_plot_a.png) | ![](/img/results_plot_b.png) | 
 
 
 ## References:
