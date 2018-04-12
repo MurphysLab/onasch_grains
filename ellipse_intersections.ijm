@@ -69,10 +69,12 @@ function ellipseLineIntersections(xL,yL,xA,yA,xB,yB){
 	// Intersections of one line (L) and two ellipses (A&B)
 	x_int = newArray(0);
 	y_int = newArray(0);
+	a_int = newArray(0); // Record the line's scalar to determine sequence at the end
 	for(i=1; i<xA.length; i++){
 		a = segmentIntersectionLE(xL[0],yL[0],xL[1],yL[1],xA[i-1],yA[i-1],xA[i],yA[i]); //xB[j-1],yB[j-1],xB[j],yB[j]
 		if(a[0]){
-			print("INT "+ i);
+			//print("INT "+ i);
+			a_int = Array.concat(a_int,a[2]);
 			x_int = Array.concat(x_int,a[4]);
 			y_int = Array.concat(y_int,a[5]);
 		}
@@ -81,14 +83,25 @@ function ellipseLineIntersections(xL,yL,xA,yA,xB,yB){
 		a = segmentIntersectionLE(xL[0],yL[0],xL[1],yL[1],xB[j-1],yB[j-1],xB[j],yB[j]);
 		if(a[0]){
 			print("INT "+ j);
+			a_int = Array.concat(a_int,a[2]);
 			x_int = Array.concat(x_int,a[4]);
 			y_int = Array.concat(y_int,a[5]);
 		}
 	}
 	// ideally should check for duplicates before the end
 
-	if(x_int.length > 0){
-		makeSelection("polyline",x_int,y_int);
+	if(a_int.length == 4){
+		// new x & y positions,
+		// arranged by order of scalar a.
+		x_pos = newArray(4);
+		y_pos = newArray(4);
+		rank = Array.rankPositions(a_int); 
+		for(i=0; i<4; i++){
+			x_pos[i] = x_int[rank[i]];
+			y_pos[i] = y_int[rank[i]];
+		}
+	
+		makeSelection("polyline",x_pos,y_pos);
 	}
 	return x_int.length;
 }
