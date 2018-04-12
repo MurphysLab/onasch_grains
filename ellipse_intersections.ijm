@@ -64,10 +64,10 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 			if(a[0]){
 				// draw intersection
 				
-				xB_int = a[3]*(xB[j]-xB[j-1])+xB[j];
-				xA_int = a[2]*(xA[i]-xA[i-1])+xA[i];
-				yB_int = a[3]*(yB[j]-yB[j-1])+yB[j];
-				yA_int = a[2]*(yA[i]-yA[i-1])+yA[i];
+				xB_int = a[3]*(xB[j]-xB[j-1])+xB[j-1];
+				xA_int = a[2]*(xA[i]-xA[i-1])+xA[i-1];
+				yB_int = a[3]*(yB[j]-yB[j-1])+yB[j-1];
+				yA_int = a[2]*(yA[i]-yA[i-1])+yA[i-1];
 				makeLine(xA_int,yA_int,xB_int,yB_int);
 				Overlay.addSelection("ff0000",2);
 				Overlay.show;
@@ -156,5 +156,6 @@ wait(1000);
 
 n_int = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
 print("Intersections: " + n_int);
+
 
 
