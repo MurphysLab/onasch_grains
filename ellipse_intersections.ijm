@@ -48,7 +48,8 @@ function segmentIntersectionLE(xa1,ya1,xa2,ya2,xb1,yb1,xb2,yb2){
 		b = (1/d) * ( (x00 - x10)*y01 - (y00 - y10)*x01 ); 	// indicates position on the "B" vector
 		a = (1/d) * ( (x00 - x10)*y11 - (y00 - y10)*x11 ); 	// indicates position on the "A" vector
 		xint = x00 + a*x01; yint = y00 + a*y01;			// the (xint,yint) where the lines intersect
-		if(a>=0 && a<=1 && b<=1 && b>=0){correct = 1;}else{correct = 0;}// this should preclude all values except the desired intersection
+		// Only B (the ellipse) is limited
+		if(b<=1 && b>=0){correct = 1;}else{correct = 0;}// this should preclude all values except the desired intersection
 		//if(correct){
 		//print("correct: " + correct + " & CP: " + crossproduct2D + " & a: " + a + " & b: " + b + " & xint: " + xint + " & yint: " + yint);
 		//}
