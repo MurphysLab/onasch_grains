@@ -62,6 +62,16 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 		for(j=1; j<xB.length; j++){
 			a = segmentIntersection(xA[i-1],yA[i-1],xA[i],yA[i],xB[j-1],yB[j-1],xB[j],yB[j]);
 			if(a[0]){
+				// draw intersection
+				xB_int = a[3]*(xB[j]-xB[j-1])+xB[j];
+				xA_int = a[2]*(xA[i]-xA[i-1])+xA[i];
+				yB_int = a[3]*(yB[j]-yB[j-1])+yB[j];
+				yA_int = a[2]*(yA[i]-yA[i-1])+yA[i];
+				makeLine(xA_int,yA_int,xB_int,yB_int);
+				Overlay.addSelection("ff0000",2);
+				Overlay.show;
+				
+				print(""+i+", " + j);
 				Array.print(a);
 				makeLine(xA[i-1],yA[i-1],xA[i],yA[i]);
 				Overlay.addSelection("0066ff",2);
