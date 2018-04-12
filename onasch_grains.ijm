@@ -47,8 +47,16 @@ scale_factor = 1;//76/100; // px / um
 
 
 Overlay.clear;
+Overlay.show;
 
-// Drawing Ellipses
+// Drawing Ellipses & Import Table Data
+ID_tab = newArray(nResults);
+x_tab = newArray(nResults);
+y_tab = newArray(nResults);
+d_tab = newArray(nResults);
+phi_tab = newArray(nResults);
+ratio_tab = newArray(nResults);
+
 for(n=0; n<nResults; n++){
 	x = scale_factor*getResult("X",n);
 	y = scale_factor*getResult("Y",n);
@@ -64,62 +72,80 @@ for(n=0; n<nResults; n++){
 	strokeWidth = 5;
 	Overlay.addSelection(strokeColor, strokeWidth);
 	Overlay.show;
+	ID_tab[n] = getResult("ID",n);
+	x_tab[n] = scale_factor*getResult("X",n);
+	y_tab[n] = scale_factor*getResult("Y",n);
+	d_tab[n] = scale_factor*2*getResult("Max",n);
+	phi_tab[n] = getResult("Phi",n);
+	ratio_tab[n] = getResult("R",n);
 }
 
+if(isOpen("Results")){ 
+	selectWindow("Results"); 
+	run("Close"); 
+} 
 
-for(n=0; n<nResults-1; n++){
+row = 0;
+for(n=0; n<ID_tab.length-1; n++){
 	// First Ellipse (A)
-	ID_A = getResult("ID",n);
-	x = scale_factor*getResult("X",n);
-	y = scale_factor*getResult("Y",n);
-	r_min = scale_factor*getResult("Min",n);
-	r_max = scale_factor*getResult("Max",n);
-	d_max = 2*r_max;
-	ratio = getResult("R",n);
-	phi = getResult("Phi",n);
-	aspectRatio = 1/ratio; // inverse
-	a = rotateLine(x,y,d_max,phi);
-	makeEllipse( a[0],a[1],a[2],a[3], aspectRatio);
+	aspectRatioA = 1/ratio_tab[n]; // inverse
+	a = rotateLine(x_tab[n],y_tab[n],d_tab[n],phi_tab[n]);
+	makeEllipse( a[0],a[1],a[2],a[3], aspectRatioA);
 	fullLoopCoords();
 	getSelectionCoordinates(xA,yA);
-	for(m=1; m<nResults; m++){
+	for(m=1; m<ID_tab.length; m++){
 		// Second Ellipse (B)
-		ID_B = getResult("ID",m);
-		xM = scale_factor*getResult("X",m);
-		yM = scale_factor*getResult("Y",m);
-		r_minM = scale_factor*getResult("Min",m);
-		r_maxM = scale_factor*getResult("Max",m);
-		d_maxM = 2*r_maxM;
-		ratioM = getResult("R",n);
-		phiM = getResult("Phi",n);
-		aspectRatioM = 1/ratioM; // inverse
-		b = rotateLine(xM,yM,d_maxM,phiM);
-		makeEllipse( b[0],b[1],b[2],b[3], aspectRatioM);
+		aspectRatioB = 1/ratio_tab[m]; // inverse
+		b = rotateLine(x_tab[m],y_tab[m],d_tab[m],phi_tab[m]);
+		makeEllipse( b[0],b[1],b[2],b[3], aspectRatioB);
 		fullLoopCoords();
 		getSelectionCoordinates(xB,yB);
 
 		// Find Intersections Between Ellipses A & B
 
-		n_int_EE = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
-		print("EE Intersections: " + n_int_EE);
-		getSelectionCoordinates(xI,yI);
-		Overlay.addSelection("880099FF", strokeWidth);
-		Overlay.show;
-		
-		extend = 100;
-		perpNormMidPtVectorCW(xI,yI,extend);
-		getSelectionCoordinates(xV,yV);
-		Overlay.addSelection("88FF2200", strokeWidth);
-		Overlay.show;
-		
-		n_int_LE = ellipseLineIntersections(xV,yV,xptsA,yptsA,xptsB,yptsB);
-		print("LE Intersections: " + n_int_LE);
-		Overlay.addSelection("88FF2200", 1);
-		Overlay.show;
+		n_int_EE = countIntersectionsBrute(xA,yA,xB,yB);
+		if(n_int_EE == 2){
 
+			// Line of the intersection or interface (xI & yI = inersection line)
+			getSelectionCoordinates(xI,yI);
+			Overlay.addSelection("880099FF", strokeWidth);
+			Overlay.show;
+			
+			// find normal (xV & yV = normal Vector)
+			extend = 100;
+			perpNormMidPtVectorCW(xI,yI,extend);
+			getSelectionCoordinates(xV,yV);
+			Overlay.addSelection("88AA00AA", strokeWidth);
+			Overlay.show;
 
+			// find intersections of the normal L with ellipses A & B (IO = innner & outer)
+			n_int_LE = ellipseLineIntersections(xV,yV,xA,yA,xB,yB);
+			getSelectionCoordinates(xIO,yIO);
+			//Overlay.addSelection("88DD2200", 1);
+			//Overlay.show;
+			if(n_int_LE == 4){
+				x_outer = newArray(xIO[0],xIO[3]);
+				y_outer = newArray(yIO[0],yIO[3]);
+				x_inner = newArray(xIO[1],xIO[2]);
+				y_inner = newArray(yIO[1],yIO[2]);
+				L_outer = sqrt( pow( xIO[0] - xIO[3], 2) + pow( yIO[0] - yIO[3], 2) );
+				L_inner = sqrt( pow( xIO[1] - xIO[2], 2) + pow( yIO[1] - yIO[2], 2) );
 
-		
+				makeSelection("line",x_outer,y_outer);
+				Overlay.addSelection("88AA00AA", strokeWidth);
+				Overlay.show;
+				makeSelection("line",x_inner,y_inner);
+				Overlay.addSelection("CC0066AA", strokeWidth);
+				Overlay.show;
+
+				setResult("ID1",row,ID_tab[n]);
+				setResult("ID2",row,ID_tab[m]);
+				setResult("Inner",row,L_inner);
+				setResult("Outer",row,L_outer);
+				row++;
+			}
+		}
+
 		
 	}
 }
