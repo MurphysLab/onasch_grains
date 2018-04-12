@@ -55,7 +55,29 @@ function fullLoopCoords(){
 	makeSelection("polyline",xnew,ynew);
 }
 
-
+function countIntersectionsBrute(xA,yA,xB,yB){
+	x_int = newArray(0);
+	y_int = newArray(0);
+	for(i=1; i<xA.length; i++){
+		for(j=1; j<xB.length; j++){
+			a = segmentIntersection(xA[i-1],yA[i-1],xA[i],yA[i],xB[j-1],yB[j-1],xB[j],yB[j]);
+			if(a[0]){
+				Array.print(a);
+				makeLine(xA[i-1],yA[i-1],xA[i],yA[i]);
+				Overlay.addSelection("0066ff",2);
+				Overlay.show;
+				makeLine(xB[j-1],yB[j-1],xB[j],yB[j]);
+				Overlay.addSelection("008822",2);
+				Overlay.show;
+				x_int = Array.concat(x_int,a[4]);
+				y_int = Array.concat(y_int,a[5]);
+			}
+		}
+	}
+	// ideally should check for duplicates before the end
+	makeSelection("polyline",x_int,y_int);
+	return x_int.length;
+}
 
 
 
@@ -81,7 +103,7 @@ Overlay.addSelection(strokeColor, strokeWidth);
 Overlay.show;
 
 fullLoopCoords();
-getSelectionCoordinates(xpts1,ypts2);
+getSelectionCoordinates(xpts1,ypts1);
 
 aspectRatio2 = 0.75;
 angle_deg2 = -20; 
@@ -107,7 +129,7 @@ print(ypts2[0])
 print(ypts2[ypts2.length-1]);
 
 
-
-
+n_int = countIntersectionsBrute(xpts1,ypts1,xpts2,ypts2);
+print("Intersections: " + n_int);
 
 
