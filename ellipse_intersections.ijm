@@ -63,7 +63,7 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 			a = segmentIntersectionX(xA[i-1],yA[i-1],xA[i],yA[i],xB[j-1],yB[j-1],xB[j],yB[j]);
 			if(a[0]){
 				// draw intersection
-				
+				/*
 				xB_int = a[3]*(xB[j]-xB[j-1])+xB[j-1];
 				xA_int = a[2]*(xA[i]-xA[i-1])+xA[i-1];
 				yB_int = a[3]*(yB[j]-yB[j-1])+yB[j-1];
@@ -84,9 +84,10 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 				makeLine(xB[j-1],yB[j-1],xB[j],yB[j]);
 				Overlay.addSelection("008822",2);
 				Overlay.show;
+				*/
 				x_int = Array.concat(x_int,a[4]);
 				y_int = Array.concat(y_int,a[5]);
-				wait(200);
+				//wait(200);
 			}
 		}
 	}
@@ -95,7 +96,20 @@ function countIntersectionsBrute(xA,yA,xB,yB){
 	return x_int.length;
 }
 
-
+function perpNormMidPtVectorCW(xA,yA,multiply){
+	// note: arrays should have length of 2
+	// extend is scaled length 
+	// CCW: (x,y) -> (-y,x)
+	// CW:  (x,y) -> (y,-x)
+	x_centre = 0.5*(xA[0]+xA[1]);
+	y_centre = 0.5*(yA[0]+yA[1]);
+	L = sqrt( pow(xA[1]-xA[0],2) + pow(yA[1]-yA[0],2) );
+	x_cw = ( yA[1]-yA[0] ) / L;
+	y_cw = -1 * ( xA[1]-xA[0] ) / L;
+	xv = newArray(x_centre,x_centre+x_cw*multiply);
+	yv = newArray(y_centre,y_centre+y_cw*multiply);
+	makeSelection("line",xv,yv);
+}
 
 
 
@@ -150,12 +164,22 @@ else{
 }
 
 makeSelection("polyline",xptsA,yptsA);
-wait(1000);
+wait(300);
 makeSelection("polyline",xptsB,yptsB);
-wait(1000);
+wait(300);
 
 n_int = countIntersectionsBrute(xptsA,yptsA,xptsB,yptsB);
 print("Intersections: " + n_int);
+getSelectionCoordinates(xI,yI);
+Overlay.addSelection("880099FF", strokeWidth);
+Overlay.show;
+
+extend = 10;
+perpNormMidPtVectorCW(xI,yI,extend);
+getSelectionCoordinates(xV,yV);
+Overlay.addSelection("88FF2200", strokeWidth);
+Overlay.show;
+
 
 
 
