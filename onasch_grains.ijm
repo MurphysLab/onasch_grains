@@ -40,29 +40,55 @@ scale_factor = 1; // px / um
 
 // Overlay Colours
 c_ellipse = "DD0066ff"; // alpha = 0.8; sky blue
-c_interface = "4400DDFF";
+c_interface = "8800CCEE";
 c_vector = "00FFFFFF"; // alpha = 0.00; white (don't draw)
 c_inner = "CCFF2200"; // alpha = 0.75; red
 c_outer = "88FF5700"; // alpha = 0.50; orangered
 
 // Overlay line widths
 w_ellipse = 4;
-w_interface = 3;
+w_interface = 4;
 w_vector = 0;
 w_inner = 3;
 w_outer = 2;
 
-	strokeColor =  c_ellipse;
-	strokeWidth = 5;
+
 
 // Macro
 
-if(nImages==0){
-Dialog.create("Title")
 
+// Check if required inputs are open (CSV & Image)
+
+if(nResults==0){
+	exit("Please load CSV file with ellipse data");
+}
+if(nImages==0){
+	Dialog.create("Load Image First");
+	Dialog.addMessage("Click on 'Cancel' to exit and load image.\nOtherwise click 'OK' to use blank image.");
+	Dialog.show();
+	x_for_img = newArray(nResults);
+	y_for_img = newArray(nResults);
+	for(n=0; n<nResults; n++){
+		x_for_img[n] = getResult("X",n);
+		y_for_img[n] = getResult("Y",n);
+	}
+	Array.getStatistics(x_for_img, min, x_img_max, mean, stdDev);
+	Array.getStatistics(y_for_img, min, y_img_max, mean, stdDev);
+	w_new = round(1.2*x_img_max);
+	h_new = round(1.2*y_img_max);
+	newImage("Ellipse Intersections", "8-bit white", w_new,h_new, 1);
+}
+else if(nImages>1){
+	Dialog.create("Select image window.");
+	Dialog.show();
+}
+
+
+// Clear Existing Overlays
 
 Overlay.clear;
 Overlay.show;
+
 
 // Drawing Ellipses & Import Table Data
 ID_tab = newArray(nResults);
@@ -98,7 +124,15 @@ if(isOpen("Results")){
 	run("Close"); 
 } 
 
-row = 0;
+
+
+/*  Check for Ellipse Overlaps / Intersections
+ *   Note: this only considers ellipses that 
+ *   intersect at TWO points.
+ */
+ 
+row = 0; // for data output
+
 // Ellipse A
 for(n=0; n<ID_tab.length-1; n++){
 	// Draw First Ellipse (A)
@@ -167,11 +201,13 @@ for(n=0; n<ID_tab.length-1; n++){
 				Overlay.addSelection(c_inner, w_inner);
 				Overlay.show;
 
+				// Data Output
 				setResult("ID1",row,ID_tab[n]);
 				setResult("ID2",row,ID_tab[m]);
 				setResult("Inner",row,L_inner);
 				setResult("Outer",row,L_outer);
-
+				percent_shortening = -L_outer/(L_inner+L_outer)*100;
+				setResult("e",row,percent_shortening);
 				vector_angle = 180/PI*atan2(yV[1]-yV[0],xV[1]-xV[0]);
 				setResult("Angle",row,vector_angle);
 				row++;
@@ -294,7 +330,7 @@ function ellipseLineIntersections(xL,yL,xA,yA,xB,yB){
 	for(j=1; j<xB.length; j++){
 		a = segmentIntersectionLE(xL[0],yL[0],xL[1],yL[1],xB[j-1],yB[j-1],xB[j],yB[j]);
 		if(a[0]){
-			print("INT "+ j);
+			//print("INT "+ j);
 			a_int = Array.concat(a_int,a[2]);
 			x_int = Array.concat(x_int,a[4]);
 			y_int = Array.concat(y_int,a[5]);
