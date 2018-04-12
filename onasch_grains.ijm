@@ -46,9 +46,10 @@ c_inner = "CCFF2200"; // alpha = 0.75; red
 c_outer = "88FF5700"; // alpha = 0.50; orangered
 
 // Text Options
-c_text = "DD228B22"; // colour for text
+c_text = "#228B22"; // colour for text
 font_name = "SansSerif"; //  "SansSerif", "Serif" or "Monospaced"
 font_style = "antiliased" ; // "antiliased", "bold", "italic"
+font_size = 20; // numeric
 
 // Overlay line widths
 w_ellipse = 4;
@@ -118,14 +119,16 @@ for(n=0; n<nResults; n++){
 	a = rotateLine(x,y,d_max,phi);
 	makeEllipse( a[0],a[1],a[2],a[3], aspectRatio);
 	Overlay.addSelection(c_ellipse, w_ellipse);
-	Overlay.drawString("text", x, y, 0);
 	Overlay.show;
+	
 	ID_tab[n] = getResult("ID",n);
 	x_tab[n] = scale_factor*getResult("X",n);
 	y_tab[n] = scale_factor*getResult("Y",n);
 	d_tab[n] = scale_factor*2*getResult("Max",n);
 	phi_tab[n] = getResult("Phi",n);
 	ratio_tab[n] = getResult("R",n);
+
+	Overlay.drawString(ID_tab[n], (x-0.5*font_size), (y+0.5*font_size), 0);
 }
 
 if(isOpen("Results")){ 
@@ -215,9 +218,10 @@ for(n=0; n<ID_tab.length-1; n++){
 				setResult("ID2",row,ID_tab[m]);
 				setResult("Inner",row,L_inner);
 				setResult("Outer",row,L_outer);
-				percent_shortening = -L_outer/(L_inner+L_outer)*100;
-				setResult("e",row,percent_shortening);
+				percent_shortening = L_inner/(L_inner+L_outer)*100;
+				setResult("PctShort",row,percent_shortening);
 				vector_angle = 180/PI*atan2(yV[1]-yV[0],xV[1]-xV[0]);
+				while(vector_angle < 0){ vector_angle = 180 + vector_angle; }
 				setResult("Angle",row,vector_angle);
 				row++;
 			}
@@ -228,13 +232,12 @@ for(n=0; n<ID_tab.length-1; n++){
 }
 run("Select None");
 
+// End of the Algorithm
 
 
 
 
 // FUNCTIONS
-
-
 
 function rotateLine(x_centre,y_centre,length,angle_deg){
 	// x1, y1, x2, y2
