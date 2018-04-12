@@ -95,6 +95,8 @@ for(n=0; n<nResults-1; n++){
 	aspectRatio = 1/ratio; // inverse
 	a = rotateLine(x,y,d_max,phi);
 	makeEllipse( a[0],a[1],a[2],a[3], aspectRatio);
+	fullLoopCoords();
+	getSelectionCoordinates(xA,yA);
 	for(m=1; m<nResults; m++){
 		xM = scale_factor*getResult("X",m);
 		yM = scale_factor*getResult("Y",m);
@@ -106,7 +108,11 @@ for(n=0; n<nResults-1; n++){
 		aspectRatioM = 1/ratioM; // inverse
 		b = rotateLine(xM,yM,d_maxM,phiM);
 		makeEllipse( b[0],b[1],b[2],b[3], aspectRatioM);
+		fullLoopCoords();
+		getSelectionCoordinates(xB,yB);
 
+		// Compare
+		
 	}
 }
 
