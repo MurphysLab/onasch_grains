@@ -15,6 +15,8 @@ The purpose is described in Onasch (1993); Pierson (2014) is an open-access thes
 
 The method used by this algorithm determines the points at which two ellipses intersect using the polygonal approximation of the ROI in ImageJ. Typically ImageJ's **makeEllipse** function produces 72-sided polygons when rendered as regions of interest (ROIs). In practice, this means that the method is an approximation compared to analytic calculations of ellipse intersections. However this is sufficinetly accurate for the intended purpose and has the added benefit that it can be extended to any other pair of [convex polygons](https://en.wikipedia.org/wiki/Convex_polygon). 
 
+* **ellipse_intersections.ijm** : The "Ellipse Intersections" macro provides a simple demonstration of the method which requires no additional data input. Simply open with ImageJ (or [FIJI](http://fiji.sc/Fiji)) and click ***Run*** to execute and see the results.
+
 ### The algorithm: 
 
 1. For all ellipses:
@@ -53,6 +55,11 @@ The CSV file is expected to be organized with the following columns:
 The image input is typically a TIF of a thin section of geological material under a petrographic microscope. The desired ellipses may already be drawn on it, however this is not a data input. The image file is unnecessary, however it provides a check for the data. 
 
 Two sample data files have been provided by _____. 
+
+
+## User Inputs
+
+
 
 ## Output Data
 
