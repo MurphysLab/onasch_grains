@@ -196,6 +196,9 @@ for(n=0; n<ID_tab.length-1; n++){
 			//Overlay.addSelection("88DD2200", 1);
 			//Overlay.show;
 			if(n_int_LE == 4){
+				//print(""+ID_tab[n]+", "+ID_tab[m]);//Debug
+				//Array.print(xIO);//Debug
+				//Array.print(yIO);//Debug
 				x_outer = newArray(xIO[0],xIO[3]);
 				y_outer = newArray(yIO[0],yIO[3]);
 				x_inner = newArray(xIO[1],xIO[2]);
@@ -207,11 +210,21 @@ for(n=0; n<ID_tab.length-1; n++){
 				makeSelection("line",x_outer,y_outer);
 				Overlay.addSelection(c_outer, w_outer);
 				Overlay.show;
+				
 
 				// Inner Overlay
 				makeSelection("line",x_inner,y_inner);
-				Overlay.addSelection(c_inner, w_inner);
-				Overlay.show;
+				if(selectionType() != -1){ // added because minutely tangential overlaps => no selection!
+					Overlay.addSelection(c_inner, w_inner);
+					Overlay.show;
+				}
+				else{
+					xoval = 0.5*(xIO[1]+xIO[2]) - 0.5*w_inner;
+					yoval = 0.5*(yIO[1]+yIO[2]) - 0.5*w_inner;
+					makeOval(xoval,yoval,w_inner,w_inner);
+					Overlay.addSelection("",0,c_inner);
+					Overlay.show;
+				}
 
 				// Data Output
 				setResult("ID1",row,ID_tab[n]);
@@ -223,6 +236,7 @@ for(n=0; n<ID_tab.length-1; n++){
 				vector_angle = 180/PI*atan2(yV[1]-yV[0],xV[1]-xV[0]);
 				while(vector_angle < 0){ vector_angle = 180 + vector_angle; }
 				setResult("Angle",row,vector_angle);
+				//updateResults; //Debug
 				row++;
 			}
 		}
