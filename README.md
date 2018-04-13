@@ -61,7 +61,7 @@ The CSV file is expected to be organized with the following columns:
 
 The image input is typically a TIF of a thin section of geological material under a petrographic microscope. The desired ellipses may already be drawn on it, however this is not a data input. The image file is unnecessary, however it provides a check for the data. 
 
-Two sample data files have been provided by _____. 
+Two sample data files have been provided by Marques Hatfield. 
 
 
 ## User Inputs
